@@ -20,6 +20,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 import json
+import io
 from laeyerz.flow.Node import Node
 
 load_dotenv()
@@ -108,7 +109,7 @@ class OpenAILLMNode(Node):
         print(f"Setting up node {self.name}")
 
     #def call_llm(self, inputs):
-    def call_llm(self, messages, model, tools):
+    def call_llm(self, messages, model, tools=[]):
 
         #messages = inputs.get('messages')
         #model    = inputs.get('model')
@@ -187,6 +188,19 @@ class OpenAILLMNode(Node):
 
         return parsed_response
 
+
+
+    def generate_image(self, model, prompt, nImages, size='1024x1024'):
+        
+        img_response = self.client.images.generate(
+            model=model,
+            prompt=prompt,
+            size=size,
+            n=nImages
+        )
+
+        image_bytes = base64.b64decode(img_response.data[0].b64_json)
+        return image_bytes
 
 
 
