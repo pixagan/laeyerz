@@ -23,9 +23,6 @@ import json
 import io
 from laeyerz.flow.Node import Node
 
-load_dotenv()
-
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 class OpenAILLMNode(Node):
 
