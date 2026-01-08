@@ -49,7 +49,7 @@ class PdfLoader(Node):
             }
         ]
 
-        self.add_action(action_name="load_pdf", function=self.load_pdf, parameters=[], inputs=[], outputs=[], isDefault=True, description="Load a PDF file")
+        self.add_action(action_name="load_pdf", function=self.load_pdf, parameters=[], inputs=node_inputs, outputs=node_outputs, isDefault=True, description="Load a PDF file")
 
 
     def load_pdf(self, filename:str)->(list):

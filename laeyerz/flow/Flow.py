@@ -393,6 +393,8 @@ class Flow:
             #run the action
             outputs = curr_node.actions[next_action].function(**inputd)
 
+
+            print("Outputs : ", len(outputs))
             #pack the graph state with the outputs
             print("Outputs : ", outputs)
             for key, value in outputs.items():

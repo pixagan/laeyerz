@@ -20,6 +20,8 @@ import uuid
 
 from laeyerz.flow.AppState import AppState
 
+from laeyerz.utils.Dictify import dictify
+
 
 class NodeConfig:
     def __init__(self):
@@ -179,7 +181,15 @@ class Node:
 
         if action_name not in self.actions:
 
-            newAction = Action(action_name=action_name, function=function, inputs=inputs,parameters=parameters, outputs=outputs, description=description)
+            if (len(outputs) > 0):
+               output_keys = [{"key": output["name"], "type": output["type"]} for output in outputs]
+            else:
+                output_keys = None
+            function2 = dictify(function, output_keys)
+
+            #function2 = function
+
+            newAction = Action(action_name=action_name, function=function2, inputs=inputs,parameters=parameters, outputs=outputs, description=description)
             self.actions[action_name] = newAction
 
             if isDefault:
