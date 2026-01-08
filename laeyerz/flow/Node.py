@@ -310,7 +310,7 @@ class Node:
     def to_dict(self):
 
         return {
-            "node_id": self.id,
+            "node_id": str(self.id),
             'id': self.name,
             'name': self.name,
             'metadata': self.metadata,

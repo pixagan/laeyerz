@@ -60,6 +60,8 @@ class Flow:
 
         self.inputs = {}
 
+        self.flow_outputs = []
+
 
     def get_node(self, node_id):
 
@@ -191,6 +193,19 @@ class Flow:
 
         return True
 
+
+
+    def set_node_outputs(self, outputs):
+
+        flow_outputs = []
+        for output in outputs:
+            output_split = output.split("|")
+            flow_outputs.append({
+                "node": output_split[0],
+                "action": output_split[1],
+                "socket": output_split[2]
+            })
+        self.flow_outputs = flow_outputs
 
 
     def run_node(self, node_name, inputs):
@@ -405,21 +420,33 @@ class Flow:
             #get next edge
             next_edge = curr_node.targets[0]
             curr_edge = self.edges[next_edge]
-           
+
+
+
+        run_outputs = {}
+
+        try:
+            for output_label in self.flow_outputs:
+                run_outputs[output_label['node']+"|"+output_label['action']+"|"+output_label['socket']] = self.graph_state.get_values(output_label['node']+"|"+output_label['action'], output_label['socket'])
+        except Exception as e:
+            print("Error getting outputs : ", e)
+            run_outputs = {}
+
+        return run_outputs
 
 
     def to_dict(self):
 
         nodes_str = []
-        for node in self.nodes:
+        for key, node in self.nodes.items():
             nodes_str.append(node.to_dict())
         
         edges_str = []
-        for edge in self.edges:
+        for key, edge in self.edges.items():
             edges_str.append(edge.to_dict())
         
         return {
-            "id": self.id,
+            "id": str(self.id),
             "name": self.name,
             "description": self.description,
             "nodes": nodes_str, 
@@ -527,10 +554,7 @@ class Flow:
 
 
 
-    def export_flow(self, filename):
-        with open(filename, 'w') as file:
-            json.dump(self.to_dict(), file)
-        return True
+
 
 
     def set_node_action(self, node_id, action_name):
@@ -566,7 +590,10 @@ class Flow:
 
 
 
-
+    def export_flow(self, filename):
+        with open(filename, 'w') as file:
+            json.dump(self.to_dict(), file)
+        return True
 
 
 def main():

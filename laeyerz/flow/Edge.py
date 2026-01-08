@@ -65,9 +65,13 @@ class Edge:
     def to_dict(self):
         return {
             "id": str(self.id),
-            "source": self.source,
-            "target": self.target,
+            "source_node": self.source_node,
+            "target_node": self.target_node,
+            "source_action": self.source_action,
+            "target_action": self.target_action,
             "label": self.label,
+            "isConditional": str(self.isConditional),
+            #"condition": self.condition,
         }
 
         
