@@ -41,9 +41,9 @@ def dictify(func, output_keys=None):
 def main():
     def test_function():
         #return {"name": "John", "age": 30}
-        return {"name":"John"}, 30
+        return 30
 
-    function2 = dictify(test_function, ["nam", "ag"])
+    function2 = dictify(test_function, [])
     outputs = function2()
     print(outputs)
 

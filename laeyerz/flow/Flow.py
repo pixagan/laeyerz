@@ -37,6 +37,7 @@ class Flow:
         self.node_map       = {}
         self.node_id_map    = {}
         self.nodelist       = []
+        self.node_path      = {}
 
         self.edges          = {}
         self.edge_map       = {}
@@ -124,7 +125,7 @@ class Flow:
                             "action":source_split[1],
                             "socket":source_split[2]
                         }
-                    node.actions[key].inputs[iI]['source'] = source
+                    node.actions[key].inputs[iI]['final_source'] = source
                     node.actions[key].inputs[iI]['inputType'] = "source"
         
         self.nodes[node.name] = node
@@ -169,7 +170,7 @@ class Flow:
 
         for cinput in self.nodes[socket_node].actions[socket_action_name].inputs:
             if(cinput['name'] == socket_input_name):
-                cinput['source'] = source
+                cinput['final_source'] = source
                 cinput['inputType'] = "source"
                 break
         #self.nodes[socket_node].actions[socket_action_name].inputs[socket_input_name]['source'] = source
@@ -263,6 +264,8 @@ class Flow:
             self.edges[newEdge.id] = newEdge
             self.edgelist.append(newEdge.id)
             self.nodes[destination_node].sources.append(newEdge.id)
+             
+            #self.node_path[destination_node+"|"+destination_action] = newEdge.id
 
             self.start      = destination_node
             self.start_edge = newEdge.id
@@ -284,6 +287,7 @@ class Flow:
             self.edgelist.append(newEdge.id)
 
             self.nodes[source_node].targets.append(newEdge.id)
+            self.node_path[source_node+"|"+source_action] = newEdge.id
             self.end = source_node
             self.end_edge = newEdge.id
             #self.nodes[source_node].targets.append("END")
@@ -305,6 +309,7 @@ class Flow:
             self.edgelist.append(newEdge.id)
 
             self.nodes[source_node].targets.append(newEdge.id)
+            self.node_path[source_node+"|"+source_action] = newEdge.id
             self.nodes[destination_node].sources.append(newEdge.id)
             
             
@@ -393,13 +398,13 @@ class Flow:
 
                 if(cinput['inputType'] == "source"):
 
-                    if(cinput['source']['node'] == "INPUTS"):
-                        inputd[cinput['name']] = self.graph_state.get_values('INPUTS', cinput['source']['socket'])
+                    if(cinput['final_source']['node'] == "INPUTS"):
+                        inputd[cinput['name']] = self.graph_state.get_values('INPUTS', cinput['final_source']['socket'])
                     
-                    elif(cinput['source']['node'] == "GLOBAL"):
-                        inputd[cinput['name']] = self.graph_state.get_values("GLOBAL", cinput['source']['socket'])
+                    elif(cinput['final_source']['node'] == "GLOBAL"):
+                        inputd[cinput['name']] = self.graph_state.get_values("GLOBAL", cinput['final_source']['socket'])
                     else:
-                        inputd[cinput['name']] = self.graph_state.get_values(cinput['source']['node']+"|"+cinput['source']['action'], cinput['source']['socket'])
+                        inputd[cinput['name']] = self.graph_state.get_values(cinput['final_source']['node']+"|"+cinput['final_source']['action'], cinput['final_source']['socket'])
 
 
                 elif(cinput['inputType'] == "value"):
@@ -411,14 +416,17 @@ class Flow:
 
             print("Outputs : ", len(outputs))
             #pack the graph state with the outputs
-            print("Outputs : ", outputs)
+            #print("Outputs : ", outputs)
             for key, value in outputs.items():
                 self.graph_state.update_state(next_node+"|"+next_action, key, value)
 
 
 
             #get next edge
-            next_edge = curr_node.targets[0]
+            next_edge = self.node_path[next_node+"|"+next_action]
+            
+            #next_edge = curr_node.targets[0]
+            print("Next Edge : ", next_edge)
             curr_edge = self.edges[next_edge]
 
 

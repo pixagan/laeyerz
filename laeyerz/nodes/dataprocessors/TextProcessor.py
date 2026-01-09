@@ -19,7 +19,7 @@ class TextProcessorNode(Node):
         for page in pages:
             text = text + page["content"]
 
-        return text
+        return {"text": text}
 
 
     def split_text(self, text, chunk_size = 200, padding = 30):
@@ -38,7 +38,7 @@ class TextProcessorNode(Node):
                 current_chunk = ""
 
 
-        return chunks
+        return {"chunks": chunks}
 
 
     def page_to_chunks(self, text):

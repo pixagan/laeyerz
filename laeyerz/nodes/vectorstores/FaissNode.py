@@ -60,10 +60,10 @@ class FaissNode(Node):
 
         print("saved metadata : ",indices, distances)
 
-        search_out = []
+        results = []
         for i in range(len(indices[0])):
             index = indices[0][i]
-            search_out.append({
+            results.append({
                 #"id":str(self.metadata[int(index)]["id"]),
                 "metadata":self.metadata[int(index)],#["metadata"],
                 "score":str(distances[0][int(i)])
@@ -71,7 +71,7 @@ class FaissNode(Node):
 
         
 
-        return search_out
+        return {"results":results}
 
 
     def clear(self):
@@ -100,18 +100,17 @@ class FaissNode(Node):
                 "source":"",
                 "value":None
 
-            }
-        ]
-        store_outputs = [
+            },
             {
-                "name":"vectors",
+                "name":"metadata",
                 "type":"list",
-                "description":"The vectors that were added",
-                "outputType":"output",
+                "description":"The metadata to add",
+                "inputType":"input",
                 "source":"",
                 "value":None
             }
         ]
+        store_outputs = []
         self.add_action(action_name="store", function=self.store, parameters=[], inputs=store_inputs, outputs=store_outputs, isDefault=True, description="Add vectors to the FAISS index")
 
         search_inputs = [
@@ -122,11 +121,19 @@ class FaissNode(Node):
                 "inputType":"input",
                 "source":"",
                 "value":None
+            },
+            {
+                "name":"k",
+                "type":"int",
+                "description":"The number of results to return",
+                "inputType":"input",
+                "source":"",
+                "value":None
             }
         ]
         search_outputs = [
             {
-                "name":"search_out",
+                "name":"results",
                 "type":"list",
                 "description":"The search results",
                 "outputType":"output",

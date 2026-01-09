@@ -56,6 +56,8 @@ class NodeOutputMap:
         self.outputs = outputs
 
 
+
+
 def default_function():
     print(f"Running Node ")
     return {"output": "Dummy Node run"}
@@ -64,6 +66,7 @@ def default_function():
 class Action:
 
     def __init__(self, action_name, function, parameters={}, inputs=[], outputs=[], description=""):
+        self.id = str(uuid.uuid4())
         self.action_name = action_name
         self.function    = function
         self.inputs      = inputs
@@ -182,7 +185,8 @@ class Node:
         if action_name not in self.actions:
 
             if (len(outputs) > 0):
-               output_keys = [{"key": output["name"], "type": output["type"]} for output in outputs]
+               #output_keys = [{"key": output["name"], "type": output["type"]} for output in outputs]
+               output_keys = [output["name"] for output in outputs]
             else:
                 output_keys = None
             function2 = dictify(function, output_keys)

@@ -34,7 +34,7 @@ class Edge:
     def __init__(self, source_node, source_action, target_node, target_action,  label, isConditional=False, condition=None):
         print("Creating Edge : ", source_node, source_action, target_node, target_action, label, isConditional, condition)
         
-        self.id = uuid.uuid4()
+        self.id = str(uuid.uuid4())
        # self.source = source
         self.source_node = source_node
         self.source_action = source_action
@@ -53,7 +53,7 @@ class Edge:
             self.condition = condition
 
     def __str__(self):
-        return f"Edge(id={self.id}, source={self.source}, target={self.target}, label={self.label})"
+        return f"Edge(id={self.id}, source_node={self.source_node}, source_action={self.source_action}, target_node={self.target_node}, target_action={self.target_action}, label={self.label})"
 
 
     def next_node(self):

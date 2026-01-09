@@ -89,7 +89,7 @@ class PdfLoader(Node):
                 "content": "\n".join(page_text)
             })
 
-        return doc_pages
+        return {"doc_pages": doc_pages}
 
 
 

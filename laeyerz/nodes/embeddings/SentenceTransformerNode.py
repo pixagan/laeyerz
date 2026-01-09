@@ -36,9 +36,9 @@ class SentenceTransformerNode(Node):
     def encode(self, sentences):
         print("")
 
-        embeddings_list = self.model.encode(sentences)
+        embeddings = self.model.encode(sentences)
 
-        return embeddings_list       #list of embeddings
+        return embeddings       #list of embeddings
 
 
 
