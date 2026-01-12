@@ -360,12 +360,12 @@ class Flow:
 
     def run(self, input_data):
 
-        print("Input Data : ", input_data)
+        #print("Input Data : ", input_data)
 
         self.inputs = input_data
         for key, value in input_data.items():
             self.graph_state.update_state('INPUTS', key, value)
-        print("Graph State : ", self.graph_state.state)
+        #print("Graph State : ", self.graph_state.state)
          
 
         #get first edge from START
@@ -415,7 +415,6 @@ class Flow:
             outputs = curr_node.actions[next_action].function(**inputd)
 
 
-            print("Outputs : ", len(outputs))
             #pack the graph state with the outputs
             #print("Outputs : ", outputs)
             for key, value in outputs.items():
@@ -427,7 +426,6 @@ class Flow:
             next_edge = self.node_path[next_node+"|"+next_action]
             
             #next_edge = curr_node.targets[0]
-            print("Next Edge : ", next_edge)
             curr_edge = self.edges[next_edge]
 
 
