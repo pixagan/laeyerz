@@ -37,6 +37,8 @@ class OpenAILLMNode(Node):
             "view_subtype": "LLM",
         }
 
+        self.instructions = instructions
+
         self.client = None
 
         if(config.get('api_key')):

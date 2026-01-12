@@ -409,6 +409,7 @@ class Flow:
 
                 elif(cinput['inputType'] == "value"):
                     inputd[cinput['name']] = cinput['value']
+
                 
             #run the action
             outputs = curr_node.actions[next_action].function(**inputd)

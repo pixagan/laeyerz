@@ -79,6 +79,10 @@ class Action:
         return self.function(**inputs)
 
 
+    def add_input(self, input_in):
+        self.inputs.append(input_in)
+
+
     def get_tools(self):
 
         tool_dict = {

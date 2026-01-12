@@ -17,42 +17,70 @@ PromptNode module for prompt management
 in the Laeyerz framework.
 """
 
+from laeyerz.flow.Node import Node
+
 class PromptNode(Node):
 
-    def __init__(self, node_name, params={}):
-        super().__init__(node_type='Prompt', node_name=node_name, node_subtype='LLM', description='Prompt Node')
-        self.actions = []
-        self.items = []
-        self.add_action(action_name="generate_prompt", function=self.generate_prompt, inputs=["model"], parameters=["model"], outputs=["prompt"], isDefault=True)
+    def __init__(self, node_name, config={}, template=None):
+        super().__init__(node_name, config)
+        self.template = template
+        
+        self.add_actions()
+     
 
 
-    def setup(self):
-        print(f"Setting up node {self.name}")
+    def generate_prompt_openai(self, *args, **kwargs):
+
+        messages = []
+
+        for key, value in kwargs.items():
+            messages.append({
+                "role": self.template["roles"][key],
+                "content": value
+            })
 
 
-    def add_item(self, item):
-        self.items.append(item)
-
-
-    def get_items(self):
-        return self.items
-
-
-    def generate_prompt(self, inputs):
-
-
-        for key, value in inputs.items():
-            if key == "model":
-                model = value
-            else:
-                self.add_item(value)
+        return {"messages": messages}
 
 
 
 
-        prompt = ""
-        for item in self.items:
-            prompt += item + "\n"
-        return prompt
+    def add_prompt_inputs(self, inputs):
 
+        for cinput in inputs:
+            newInput = {
+                "name":cinput["name"],
+                "type":cinput["type"],
+                "description":"",
+                "inputType":"source",
+                "source":"",
+                "value":""
+            }
+
+            if  "source" in cinput and cinput["source"]:
+                newInput["source"] = cinput["source"]
+
+            if  "value" in cinput and cinput["value"]:
+                newInput["value"] = cinput["value"]
+
+            self.actions["generate_prompt_openai"].add_input(newInput)
+            
+
+
+    def add_actions(self):
+
+        prompt_inputs = []
+
+        prompt_outputs = [
+            {
+                "name":"messages",
+                "type":"list",
+                "description":"The messages to pass to the OpenAI API",
+                "outputType":"output",
+                "source":"",
+                "value":None
+            }
+        ]
+
+        self.add_action(action_name="generate_prompt_openai", function=self.generate_prompt_openai, parameters=[], inputs=prompt_inputs, outputs=prompt_outputs, isDefault=True, description="Convert inputs into a prompt for LLMs")
 
