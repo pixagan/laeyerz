@@ -63,6 +63,12 @@ class Flow:
 
         self.flow_outputs = []
 
+        self.active_actions = set()
+
+
+    def update_active_actions(self, node_name, action_name):
+        self.active_actions.add(node_name+"|"+action_name)
+
 
     def get_node(self, node_id):
 
@@ -257,13 +263,17 @@ class Flow:
             destination_split  = destination.split("|")
             destination_node   = destination_split[0]
             destination_action = destination_split[1]
-            
 
+           
 
             newEdge = Edge("START", "START", destination_node, destination_action, "START"+"-"+destination_action, False, None)
             self.edges[newEdge.id] = newEdge
             self.edgelist.append(newEdge.id)
             self.nodes[destination_node].sources.append(newEdge.id)
+
+            self.update_active_actions(destination_node, destination_action)
+            
+
              
             #self.node_path[destination_node+"|"+destination_action] = newEdge.id
 
@@ -286,11 +296,15 @@ class Flow:
             self.edges[newEdge.id] = newEdge
             self.edgelist.append(newEdge.id)
 
+            self.update_active_actions(source_node, source_action)
+
             self.nodes[source_node].targets.append(newEdge.id)
             self.node_path[source_node+"|"+source_action] = newEdge.id
             self.end = source_node
             self.end_edge = newEdge.id
             #self.nodes[source_node].targets.append("END")
+
+
 
             return True
 
@@ -312,6 +326,8 @@ class Flow:
             self.node_path[source_node+"|"+source_action] = newEdge.id
             self.nodes[destination_node].sources.append(newEdge.id)
             
+            self.update_active_actions(destination_node, destination_action)
+            self.update_active_actions(source_node, source_action)
             
             return True
 
@@ -562,14 +578,11 @@ class Flow:
 
 
 
-
-
     def set_node_action(self, node_id, action_name):
         self.nodes[self.node_id_map[node_id]].set_action(action_name)
         return action_name
 
 
-   
 
     def set_action(self, component, action):
 

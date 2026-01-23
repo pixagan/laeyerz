@@ -94,6 +94,21 @@ class Action:
         }
         return self.function.get_tools()
 
+
+    def to_dict(self):
+
+        action_dict = {
+            "id": self.id,
+            "action_name": self.action_name,
+            "function": "",
+            "inputs": self.inputs,
+            "parameters": self.parameters,
+            "outputs": self.outputs,
+            "description": self.description,
+        }
+
+        return action_dict
+
     
 
 
@@ -326,6 +341,7 @@ class Node:
             # 'node_subtype': self.node_subtype,
             # 'node_type': self.node_type,
             'description': self.description,
+            'actions': [],
             'inputs': self.inputs,
             'outputs': self.outputs
             }

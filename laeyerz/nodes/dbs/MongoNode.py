@@ -33,6 +33,7 @@ from datetime import datetime
 class MongoNode(Node):
 
     def __init__(self, node_name, config={}):
+        super().__init__(node_name, config)
         self.client = MongoClient(config.get('MONGO_URI'))
         self.db     = self.client[config.get('MONGO_DB')]
         print("MongoNode initialized", self.client, self.db, config.get('MONGO_URI'), config.get('MONGO_DB'))
@@ -103,7 +104,7 @@ class MongoNode(Node):
 
     def update_document_id(self, collection_name, document_id, new_values):
         """Update documents matching the query"""
-        query = {"_id": ObjectId(document_id)}
+        query = {"_id": ObjectId(do2cument_id)}
         update_operation = { '$set' : 
             new_values
         }

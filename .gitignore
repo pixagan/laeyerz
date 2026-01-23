@@ -15,6 +15,12 @@ laeyerz.egg-info/
 /laeyerz/memory/sqldb/__pycache__/
 /laeyerz/flow/__pycache__
 /laeyerz/nodes/__pycache__
+/laeyerz/flow/__pycache__/Edge.cpython-312.pyc
+/laeyerz/flow/__pycache__/Flow.cpython-312.pyc
+/laeyerz/flow/__pycache__/Node.cpython-312.pyc
+/laeyerz/nodes/llm/__pycache__/OpenAILLMNode.cpython-312.pyc
+/laeyerz/nodes/llm/__pycache__/PromptNode.cpython-312.pyc   
+
 datasets
 testcases
 dummy
