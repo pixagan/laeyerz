@@ -27,12 +27,12 @@ Now use pip install -e . to install the package locally.
 pip install -e .
 ```
 
-# You can get started with our quickstart below
-#You can checkout more examples with out laeyerz example repository
+## You can get started with our quickstart below
+## You can checkout more examples with out laeyerz example repository
 https://github.com/pixagan/laeyerz-examples
 
 
-# Let us know create our first simple workflow graph using Laeyerz.
+## Let us now create our first simple workflow graph using Laeyerz.
 
 
 ### Import the Node and Flow
