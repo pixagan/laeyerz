@@ -31,6 +31,10 @@ class PromptNode(Node):
 
     def generate_prompt_openai(self, *args, **kwargs):
 
+        print("Args : ", args)
+        print("Kwargs : ", kwargs)
+        print("------------------------------------------------")
+
         messages = []
 
         for key, value in kwargs.items():

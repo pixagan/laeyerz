@@ -26,8 +26,10 @@ from laeyerz.flow.Node import Node
 
 class OpenAILLMNode(Node):
 
-    def __init__(self, node_name, config={}, instructions=None):
+    def __init__(self, node_name, model, config={}, instructions=None):
         super().__init__(node_name=node_name, description='OpenAI LLM Node')
+        
+        self.model = model
         self.metadata = {
             "node_type": "OpenAI",
             "node_subtype": "LLM",
@@ -108,22 +110,13 @@ class OpenAILLMNode(Node):
         print(f"Setting up node {self.name}")
 
     #def call_llm(self, inputs):
-    def call_llm(self, messages, model, tools=[]):
-
-        #messages = inputs.get('messages')
-        #model    = inputs.get('model')
-        #tools    = inputs.get('tools')
-        #output_format = inputs.get('output_format')
-
-        #print("Messages : ", messages)
-        #print("Model : ", model)
-        #print("Tools : ", tools)
+    def call_llm(self, messages, tools=[]):
 
         if(self.instructions):
             messages.insert(0, {"role":"developer", "content":self.instructions})
 
         response = self.client.chat.completions.create(
-                model=model,
+                model=self.model,
                 messages = messages,
                 tools = tools,
                 tool_choice = "auto"
@@ -189,28 +182,15 @@ class OpenAILLMNode(Node):
 
 
 
-    def generate_image(self, model, prompt, nImages, size='1024x1024'):
-        
-        img_response = self.client.images.generate(
-            model=model,
-            prompt=prompt,
-            size=size,
-            n=nImages
-        )
-
-        image_bytes = base64.b64decode(img_response.data[0].b64_json)
-        return image_bytes
-
-
 
 
 # Return the configured node
 if __name__ == "__main__":
     # For testing the node
 
-    llm_node = OpenAILLMNode("LLM", "gpt-4o-mini")
+    llm_node = OpenAILLMNode(node_name="LLM", model="gpt-4o-mini")
 
-    llm_node.call_llm({"messages": [{"role": "user", "content": "Hello, how are you?"}], "model": "gpt-4o-mini"})
+    llm_node.call_llm({"messages": [{"role": "user", "content": "Hello, how are you?"}]})
   
     
     # result, next_node = OpenAINode.run(app_state)

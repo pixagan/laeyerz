@@ -120,6 +120,10 @@ class MongoNode(Node):
         return self.db[collection_name].update_one(query, update_operation)
        
 
+    def delete_document_id(self, collection_name, document_id):
+        """Delete a document matching the query"""
+        return self.db[collection_name].delete_one({"_id": ObjectId(document_id)})
+
 
 
     def delete(self, collection_name, query):

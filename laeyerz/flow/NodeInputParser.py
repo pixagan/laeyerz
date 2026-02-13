@@ -19,7 +19,7 @@ in the Laeyerz framework.
 
 class NodeInputParser:
     def __init__(self, id, type, name, description, inputs, outputs):
-        self.params = p[]
+        self.params = []
 
     def __str__(self):
         return f"Node(id={self.id}, type={self.type}, name={self.name}, description={self.description}, inputs={self.inputs}, outputs={self.outputs}, code={self.code})"
