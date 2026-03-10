@@ -1,6 +1,6 @@
 from laeyerz.flow.Node import Node
 from laeyerz.utils.KeyManager import KeyManager
-from laeyerz.nodes.llm.OpenAILLMNode import OpenAILLMNode as LLM
+from laeyerz.nodes.llm.OpenAINode import OpenAINode as LLM
 
 class ToolReasoningAgent(Node):
 
@@ -79,6 +79,10 @@ class ToolReasoningAgent(Node):
                     }
                 )
 
+            
+            #print("Prompt Messages : ", prompt_messages)
+            #print("Tool Descriptions : ", self.tool_descriptions)
+
             response = self.reasoning.call_llm(prompt_messages, self.tool_descriptions)
 
             print("----------------------------------Reasoning ------------------------------")
@@ -119,7 +123,7 @@ class ToolReasoningAgent(Node):
                     context.append(
                         {
                             "tool_name": tool_name, 
-                            "tool_output": tool_output
+                            "tool_output": str(tool_output)
                         }
                     )
 

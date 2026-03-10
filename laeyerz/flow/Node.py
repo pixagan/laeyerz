@@ -173,7 +173,7 @@ class Node:
 
 
     def __str__(self):
-        return f"Node(id={self.id}, type={self.nodetype}, name={self.name}, inputs={self.inputs},description={self.description})"
+        return f"Node(id={self.id}, name={self.name}, inputs={self.inputs},description={self.description})"
 
 
     def setup(self):

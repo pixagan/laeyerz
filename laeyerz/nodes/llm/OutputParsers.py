@@ -1,16 +1,21 @@
+from laeyerz.nodes.Node import Node
+
+
 class LLMOutputParser(Node):
 
     def __init__(self, node_name, config={}):
         super().__init__(node_name, config)
 
-    def clean(self, text_in, possible_type='text'):
 
-        #determine what type of output
+    def extract_open_ai_json(self, llm_out, format, values,):
 
-
-        #process accordingly
-
-        text_out = text_in
+        content = llm_out.get("content")
 
 
-        return output
+
+        print("Extracting OpenAI JSON from text")
+
+
+        
+    def add_actions(self):
+        self.add_action(action_name="extract_open_ai_json", function=self.extract_open_ai_json, inputs=["text"], outputs=["text"])

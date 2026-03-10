@@ -23,7 +23,6 @@ from laeyerz.flow.Node import Node
 from laeyerz.flow.AppState import AppState, GraphState
 from laeyerz.flow.Edge import Edge
 from laeyerz.flow.Evals import Evals
-from laeyerz.flow.Observe import Observe
 
 class Flow:
 
@@ -144,6 +143,7 @@ class Flow:
 
 
     def add_data_source(self, data_socket_name, data_source_type):
+        print("Adding Data Source:")
 
         #get selected node
         data_socket_split = data_socket_name.split("|")

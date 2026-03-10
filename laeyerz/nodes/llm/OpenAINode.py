@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """
-OpenAILLMNode module for OpenAI LLM integration
+OpenAINode module for OpenAI LLM integration
 in the Laeyerz framework.
 """
 from openai import OpenAI
@@ -24,7 +24,7 @@ import io
 from laeyerz.flow.Node import Node
 
 
-class OpenAILLMNode(Node):
+class OpenAINode(Node):
 
     def __init__(self, node_name, model, config={}, instructions=None):
         super().__init__(node_name=node_name, description='OpenAI LLM Node')
@@ -112,6 +112,11 @@ class OpenAILLMNode(Node):
     #def call_llm(self, inputs):
     def call_llm(self, messages, tools=[]):
 
+        print("Messages : ", messages)
+        print("Tools : ", tools)
+        print("Model : ", self.model)
+        print("------------------------------------------------")
+
         if(self.instructions):
             messages.insert(0, {"role":"developer", "content":self.instructions})
 
@@ -188,7 +193,7 @@ class OpenAILLMNode(Node):
 if __name__ == "__main__":
     # For testing the node
 
-    llm_node = OpenAILLMNode(node_name="LLM", model="gpt-4o-mini")
+    llm_node = OpenAINode(node_name="LLM", model="gpt-4o-mini")
 
     llm_node.call_llm({"messages": [{"role": "user", "content": "Hello, how are you?"}]})
   

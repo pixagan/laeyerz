@@ -40,7 +40,7 @@ class PromptNode(Node):
         for key, value in kwargs.items():
             messages.append({
                 "role": self.template["roles"][key],
-                "content": value
+                "content": str(value)
             })
 
 
