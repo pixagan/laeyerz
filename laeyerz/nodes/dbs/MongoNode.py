@@ -29,7 +29,6 @@ from datetime import datetime
 # mongo_db = os.getenv('MONGO_DB')
 
 
-
 class MongoNode(Node):
 
     def __init__(self, node_name, config={}):

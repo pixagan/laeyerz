@@ -25,4 +25,4 @@ We will soon start welcoming contributions
 We are committed to providing a safe, inclusive, and welcoming environment.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to [contact@pixagan.com].
+reported to [pixagan@gmail.com].

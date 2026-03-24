@@ -1,13 +1,41 @@
+# Copyright 2025 Pixagan Technologies
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from laeyerz.flow.Node import Node
 from laeyerz.utils.KeyManager import KeyManager
-from laeyerz.nodes.llm.OpenAINode import OpenAINode as LLM
+#from laeyerz.nodes.llm.OpenAINode import OpenAINode as LLM
 
 class ToolReasoningAgent(Node):
 
-    def __init__(self, name, api_key_path, model, role, instructions, tools):
+   # def __init__(self, name, config, api_key_path, model, role, instructions, tools):
+    def __init__(self, name, config):
         super().__init__(name)
+
+        api_key_path = config.get("api_key_path")
+        reasoner = config.get("reasoner")
+        role   =  config.get("role")
+        instructions = config.get("instructions")
+        tools = config.get("tools")
+
+
+        if(config.get('max_steps')):
+            self.max_steps = config.get("max_steps")
+        else:
+            self.max_steps = 10
         
-        self.model = model
+        
+        #self.model = model
         self.role = role
         self.task_instructions = instructions   
         self.tools = tools
@@ -17,8 +45,12 @@ class ToolReasoningAgent(Node):
             self.km = KeyManager(api_key_path)
         else:
             self.km = KeyManager()
-        self.reasoning = LLM("Reasoning", model=self.model, config={"api_key": self.km.get("OPENAI_API_KEY")})
-        self.max_steps = 10
+
+        if(config.get('reasoner')):
+            self.reasoning = reasoner #LLM("Reasoning", model=self.model, config={"api_key": self.km.get("OPENAI_API_KEY")})
+        #self.max_steps = 10
+        else:
+            raise Exception("Reasoner not found in config")
 
 
     def add_tool(self, tool):

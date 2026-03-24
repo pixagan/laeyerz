@@ -26,10 +26,10 @@ from laeyerz.flow.Node import Node
 
 class OpenAINode(Node):
 
-    def __init__(self, node_name, model, config={}, instructions=None):
+    def __init__(self, node_name, config={}):
         super().__init__(node_name=node_name, description='OpenAI LLM Node')
         
-        self.model = model
+        self.model = config.get('model', None)
         self.metadata = {
             "node_type": "OpenAI",
             "node_subtype": "LLM",
@@ -39,7 +39,10 @@ class OpenAINode(Node):
             "view_subtype": "LLM",
         }
 
-        self.instructions = instructions
+        if (config.get('instructions')):
+            self.instructions = config.get('instructions')
+        else:
+            self.instructions = None
 
         self.client = None
 
@@ -102,8 +105,7 @@ class OpenAINode(Node):
         self.add_action(action_name="call_llm", function=self.call_llm, parameters=["model"], inputs=node_inputs, outputs=node_outputs, isDefault=True, description="Call the OpenAI LLM")
         
         
-        self.config = config
-        self.instructions = instructions
+        #self.config = config
     
 
     def setup(self):
@@ -112,10 +114,10 @@ class OpenAINode(Node):
     #def call_llm(self, inputs):
     def call_llm(self, messages, tools=[]):
 
-        print("Messages : ", messages)
-        print("Tools : ", tools)
-        print("Model : ", self.model)
-        print("------------------------------------------------")
+        #print("Messages : ", messages)
+        #print("Tools : ", tools)
+        #print("Model : ", self.model)
+        #print("------------------------------------------------")
 
         if(self.instructions):
             messages.insert(0, {"role":"developer", "content":self.instructions})

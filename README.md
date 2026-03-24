@@ -129,6 +129,13 @@ simple_flow.add_node(node0)
 simple_flow.add_node(node1)
 ```
 
+### Define you node inputs either as value or as a connection
+```python
+simple_flow.add_edge("START", "Model0|model0")
+simple_flow.add_edge("Model0|model0", "Model1|model1")
+simple_flow.add_edge("Model1|model1", "END")
+```
+
 ### Add edges to order how Laeyerz's Orchestrator organizes compute
 ```python
 simple_flow.add_edge("START", "Model0|model0")
@@ -136,7 +143,17 @@ simple_flow.add_edge("Model0|model0", "Model1|model1")
 simple_flow.add_edge("Model1|model1", "END")
 ```
 
-### Setup the inputs and then run the flow
+##define what outputs you want returned at the end of the flow
+```python
+
+input_data = {
+     "input0": "Hello, world!"
+}
+output = simple_flow.run(input_data)
+```
+
+
+### Setup the inputs as a dictionary and then run the flow
 
 ```python
 
@@ -152,4 +169,4 @@ output = simple_flow.run(input_data)
 We are committed to providing a safe, inclusive, and welcoming environment.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to [contact@pixagan.com].
+reported to [pixagan@gmail.com].

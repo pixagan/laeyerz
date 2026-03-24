@@ -23,6 +23,7 @@ from laeyerz.flow.Node import Node
 from laeyerz.flow.AppState import AppState, GraphState
 from laeyerz.flow.Edge import Edge
 from laeyerz.flow.Evals import Evals
+from laeyerz.flow.DataConnections import DataConnections
 
 class Flow:
 
@@ -42,8 +43,9 @@ class Flow:
         self.edge_map       = {}
         self.edgelist       = []
         
-        self.graph_state    = GraphState()
-        self.state          = AppState()
+        self.graph_state      = GraphState()
+        self.state            = AppState()
+        #self.data_connections = DataConnections()
 
         self.components     = {}
         self.components_map = {}
@@ -109,6 +111,8 @@ class Flow:
 
         for key, cAction in node.actions.items():
             for iI,cinput in enumerate(cAction.inputs):
+
+               
                 if(cinput['source'] and cinput['source'] != "" and cinput['source'] != None):
                     source_split = cinput['source'].split("|")
                     node_name = source_split[0]
@@ -130,6 +134,7 @@ class Flow:
                             "action":source_split[1],
                             "socket":source_split[2]
                         }
+                    print("Adding Action ", key)
                     node.actions[key].inputs[iI]['final_source'] = source
                     node.actions[key].inputs[iI]['inputType'] = "source"
         
@@ -173,6 +178,8 @@ class Flow:
                 "action":source_split[1],
                 "socket":source_split[2]
             }
+
+       
 
         for cinput in self.nodes[socket_node].actions[socket_action_name].inputs:
             if(cinput['name'] == socket_input_name):
@@ -410,7 +417,7 @@ class Flow:
 
             for it, cinput in enumerate(curr_node.actions[next_action].inputs):
 
-                print("Cinput : ", cinput)
+                #print("Cinput : ", cinput)
 
                 if(cinput['inputType'] == "source"):
 
