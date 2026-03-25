@@ -142,7 +142,7 @@ simple_flow.add_node(node0)
 simple_flow.add_node(node1)
 simple_flow.add_node(node2)
 
-simple_flow.state.update("Inputs", "input0", "Hello")
+#simple_flow.state.update("Inputs", "input0", "Hello")
 
 # Add edges to define your workflow
 simple_flow.add_edge("START", "Model0|model0")
