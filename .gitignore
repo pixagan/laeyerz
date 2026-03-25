@@ -20,6 +20,7 @@ laeyerz.egg-info/
 /laeyerz/flow/__pycache__/Node.cpython-312.pyc
 /laeyerz/nodes/llm/__pycache__/OpenAINode.cpython-312.pyc
 /laeyerz/nodes/llm/__pycache__/PromptNode.cpython-312.pyc   
+/laeyerz/quickstart/QuickStart_view.json
 
 datasets
 testcases

@@ -142,7 +142,11 @@ simple_flow.add_node(node0)
 simple_flow.add_node(node1)
 simple_flow.add_node(node2)
 
-#simple_flow.state.update("Inputs", "input0", "Hello")
+
+simple_flow.add_data_source("Model0|model0|input0", "INPUTS|input0")
+simple_flow.add_data_source("Model1|model1|input1", "Model0|model0|output0")
+simple_flow.add_data_source("Model2|model2|input2", "Model1|model1|output1")
+
 
 # Add edges to define your workflow
 simple_flow.add_edge("START", "Model0|model0")
@@ -166,15 +170,8 @@ output = simple_flow.run(input_data)
 print("Output : ", output)
 
 
-#flow_dict = simple_flow.to_dict()
-#print("Flow Dict : ", flow_dict)
-
-
-#simple_flow.export_flow("QuickStart.json")
 
 export_to_view(simple_flow, "QuickStart_view.json")
 
 
-#simple_flow.export_flow("QuickStart.json")
-#simple_flow.export_run(output)
 
