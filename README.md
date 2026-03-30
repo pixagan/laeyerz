@@ -1,4 +1,4 @@
-# Laeyerz is a Graph based llm workflow and agent builder app
+# Laeyerz is an open source python tool to help students and developers quickly prototype workflows and agents
 
 ## License
 
