@@ -43,9 +43,10 @@ node0_inputs = [
         "name":"input0",
         "type":"str",
         "description":"Input to the model",
-        "inputType":"source",
-        "source":"INPUTS|input0",
-        "value":None
+        "source":""
+        # "inputType":"source",
+        # "source":"INPUTS|input0",
+        # "value":None
     }
 ]
 node0_outputs = [
@@ -80,9 +81,10 @@ node1_inputs = [
         "name":"input1",
         "type":"str",
         "description":"Input to the model",
-        "inputType":"source",
-        "source":"Model0|model0|output0",
-        "value":None
+        "source":""
+        # "inputType":"source",
+        # "source":"Model0|model0|output0",
+        # "value":None
     }
 ]
 node1_outputs = [
@@ -118,9 +120,10 @@ node2_inputs = [
         "name":"input2",
         "type":"str",
         "description":"Input to the model",
-        "inputType":"source",
-        "source":"Model1|model1|output1",
-        "value":None
+        "source":""
+        # "inputType":"source",
+        # "source":"Model1|model1|output1",
+        # "value":None
     }
 ]
 node2_outputs = [
@@ -157,7 +160,7 @@ simple_flow.add_edge("Model2|model2", "END")
 #simple_flow.add_edge("GLOBAL_STATE|value", "Model2|model2|input2")
 
 
-simple_flow.set_node_outputs(['Model2|model2|output2'])
+simple_flow.set_outputs(['Model2|model2|output2'])
 
 #finalize the flow - let flow make required pre computations, generate structures
 simple_flow.finalize()

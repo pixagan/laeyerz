@@ -283,30 +283,14 @@ class Node:
 
         print(f"Node inputs: {node_inputs}")
 
-        # for key, value in self.inputs.items():
-        #     key_split = key.split(":")
-        #     section = key_split[0]
-        #     iid = key_split[1]
-        #     key_val = app_state.get(section, iid)
-        #     node_inputs[value] = key_val[key]
-
-        #validate inputs
-
-        #result = self.function(**node_inputs)
+       
 
         result = self.actions[action_name].function(**node_inputs)
 
         print("Result : ", result)
 
 
-        #if isinstance(result, tuple):
-        # for index, (key, value) in enumerate(self.outputs.items()):
-        #     value_split = value.split(":")
-        #     section = value_split[0]
-        #     iid = value_split[1]
-        #     app_state.update(section, iid, result[index])
-
-        # next_node = self.next_node(result, app_state)
+      
 
         next_node = {}
 

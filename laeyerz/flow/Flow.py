@@ -209,7 +209,7 @@ class Flow:
 
 
 
-    def set_node_outputs(self, outputs):
+    def set_outputs(self, outputs):
 
         flow_outputs = []
         for output in outputs:
