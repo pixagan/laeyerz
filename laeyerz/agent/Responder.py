@@ -94,7 +94,8 @@ class Responder(Node):
         user_response = content["response"]
         requested_parameters = content["requested_parameters"]
     
-        
         task_keypoints = content["keypoints"]
 
-        return user_response, task_keypoints, requested_parameters
+        usage = response["tokens"]
+
+        return user_response, task_keypoints, requested_parameters, usage

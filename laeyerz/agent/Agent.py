@@ -23,6 +23,7 @@ from laeyerz.agent.Reasoner import Reasoner
 from laeyerz.agent.AgentState import AgentState
 from laeyerz.agent.Responder import Responder
 from laeyerz.agent.Planner import Planner
+from laeyerz.agent.AgentCost import AgentCost
 
 class Agent(Node):
 
@@ -71,6 +72,13 @@ class Agent(Node):
             "llm": reasoner
         })
 
+        if(tools):
+            for tool in tools:
+                self.add_tool(tool)
+
+
+
+          
 
 
         self.add_actions()
@@ -128,6 +136,10 @@ class Agent(Node):
             "stopping_criterion":"na"
         }
 
+        #total_usage = []
+
+        agent_cost = AgentCost() 
+
 
         state.set_task(task)
 
@@ -143,6 +155,15 @@ class Agent(Node):
 
             finish_reason = response['finish_reason']
             tool_calls    = response['tool_calls']
+            usage         = response['usage']
+
+            agent_cost.add_usage(nSteps, "reasoner", usage)
+
+            # total_usage.append({
+            #     "step": nSteps,
+            #     "module": "reasoner",
+            #     "tokens": usage
+            # })
 
             state.add_step({
                 "step": nSteps,
@@ -244,14 +265,27 @@ class Agent(Node):
 
         steps = state.get_steps()
 
-        user_response, task_keypoints, requested_parameters = self.responder.respond(task,  self.agent_instructions, agent_output, steps, completion_status)
+        user_response, task_keypoints, requested_parameters, responder_usage = self.responder.respond(task,  self.agent_instructions, agent_output, steps, completion_status)
+
+        # total_usage.append({
+        #     "step": nSteps,
+        #     "module": "responder",
+        #     "tokens": responder_usage
+        # })
+
+        agent_cost.add_usage(nSteps, "responder", responder_usage)
+
+
+        total_usage = agent_cost.get_total_usage()
 
         agent_output = {
             "output": user_response,
             "task_keypoints": task_keypoints,
-            "requested_parameters": requested_parameters
+            "requested_parameters": requested_parameters,
+            "usage": total_usage
         }
 
+       
 
         if write_to_file:
             self.export_run(task, steps, {}, agent_output)

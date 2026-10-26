@@ -100,6 +100,9 @@ class KeyManager:
             return False
 
 
+    def get_keys(self):
+        return self.keys
+
 
 #----------------------------------------------------------------------
 

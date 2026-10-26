@@ -65,6 +65,7 @@ class Reasoner(Node):
         content       = response["message"].content
         finish_reason = response['finish_reason']
         tool_calls    = response['tool_calls']
+        usage         = response['tokens']
 
         tools_returned = []
 
@@ -86,7 +87,8 @@ class Reasoner(Node):
         reasoner_response = {
             "content": content,
             "finish_reason": finish_reason,
-            "tool_calls": tools_returned
+            "tool_calls": tools_returned,
+            "usage": usage
         }
 
         return reasoner_response
