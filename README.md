@@ -93,7 +93,18 @@ Define the inputs as a dictionary, use the agent.run_agent() function as shown b
 agent_inputs = {
  "input1":input1
 }
-agent.run_agent(task=agent_inputs, write_to_file=True)
+agent_response = agent.run_agent(task=agent_inputs, write_to_file=True)
+```
+
+### What the Agent Returns
+The agent returns teh output, steps showing the breakdown of steps, the task keypoints, and the reasoner's llm usage
+```python
+{
+    "outputs": user_response, 
+    "steps": steps, 
+    "usage": total_usage, 
+    "task_keypoints": task_keypoints
+}
 ```
 
 # To Create a Graph based Workflow
@@ -227,6 +238,16 @@ input_data = {
 }
 output = simple_flow.run(input_data)
 ```
+
+
+### The flow returns
+```python
+{
+    "outputs": ,
+    "steps": 
+}
+```
+
 
 
 # Code of Conduct

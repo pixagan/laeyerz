@@ -286,11 +286,12 @@ class Agent(Node):
         }
 
        
-
         if write_to_file:
             self.export_run(task, steps, {}, agent_output)
 
-        return {"outputs": agent_output, "steps": steps}
+        return {"outputs": user_response, "steps": steps, "usage": total_usage, "task_keypoints": task_keypoints}
+
+
 
 
 
@@ -364,6 +365,14 @@ class Agent(Node):
                 "source":"",
                 "value":None
             },
+            {
+                "name":"write_to_file",
+                "type":"bool",
+                "description":"Whether to write the run to a file",
+                "inputType":"input",
+                "source":"",
+                "value":False
+            }
         ]
         node_outputs = [
             {
@@ -376,6 +385,16 @@ class Agent(Node):
                 "type":"list",
                 "description":"Steps taken by the agent"
             },
+            {
+                "name":"usage",
+                "type":"dict",
+                "description":"Usage of the agent"
+            },
+            {
+                "name":"task_keypoints",
+                "type":"list",
+                "description":"Task keypoints"
+            }
         ]
         self.add_action(action_name="run_agent", function=self.run_agent, parameters=["task"], inputs=node_inputs, outputs=node_outputs, isDefault=True, description="Run the agent")
         
